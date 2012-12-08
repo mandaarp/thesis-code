@@ -6,6 +6,7 @@ Created on Nov 30, 2012
 
 from glimpse.glab import *
 from glimpse.util import svm
+import os
 
 class SVM(object):
     '''
