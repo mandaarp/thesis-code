@@ -19,9 +19,11 @@ if __name__ == '__main__':
 #    
 #    print decision_values
 
-    direction_estimator = de.DirectionEstimator(value.TRAINING_IMAGES_PATH, value.TESTING_IMAGES_PATH)
+    direction_estimator = de.DirectionEstimator(value.TRAINING_IMAGES_PATH, 
+                                                value.ALL_TESTING_IMAGES_PATH,
+                                                debug=True)
     
-    direction_estimator.generate_svm(value.ALL_TESTING_IMAGES_PATH)
+    direction_estimator.generate_svm()
     
     direction_estimator.imprint_s2_prototypes(value.NUM_OF_PROTOTYPES)
     
