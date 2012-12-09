@@ -35,25 +35,25 @@ class DirectionEstimator(object):
         if self.debug is True:
             print "generating SVMs - debug mode ..."
             
-            self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_PERSON_BACK), 
-                                   os.path.join(self.testing_images_path, value.STR_PERSON_BACK))
+            self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_BACK), 
+                                   os.path.join(self.testing_images_path, value.STR_BACK))
             
-            self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_PERSON_FORWARD),
-                                          os.path.join(self.testing_images_path, value.STR_PERSON_FORWARD))
+            self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_FORWARD),
+                                          os.path.join(self.testing_images_path, value.STR_FORWARD))
             return
         
         print "generating SVMs - one for each direction ..."        
-        self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_PERSON_BACK), 
-                                   os.path.join(self.testing_images_path, value.STR_PERSON_BACK))
+        self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_BACK), 
+                                   os.path.join(self.testing_images_path, value.STR_BACK))
     
-        self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_PERSON_FORWARD),
-                                          os.path.join(self.testing_images_path, value.STR_PERSON_FORWARD))
+        self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_FORWARD),
+                                          os.path.join(self.testing_images_path, value.STR_FORWARD))
         
-        self.svm_person_left = svm.SVM(os.path.join(self.training_images_path, value.STR_PERSON_LEFT),
-                                       os.path.join(self.testing_images_path, value.STR_PERSON_LEFT))
+        self.svm_person_left = svm.SVM(os.path.join(self.training_images_path, value.STR_LEFT),
+                                       os.path.join(self.testing_images_path, value.STR_LEFT))
         
-        self.svm_person_right = svm.SVM(os.path.join(self.training_images_path, value.STR_PERSON_RIGHT),
-                                        os.path.join(self.testing_images_path, value.STR_PERSON_RIGHT))
+        self.svm_person_right = svm.SVM(os.path.join(self.training_images_path, value.STR_RIGHT),
+                                        os.path.join(self.testing_images_path, value.STR_RIGHT))
  
     def imprint_s2_prototypes(self, num_of_prototypes):
         
@@ -124,16 +124,16 @@ class DirectionEstimator(object):
         if self.debug is True:
             
             print "dumping debug mode experiments at " + file_path + " ..."
-            self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_PERSON_BACK))
-            self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_PERSON_FORWARD))
+            self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_BACK))
+            self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_FORWARD))
             
             return
         
         print "dumping experiments at " + file_path + " ..."
-        self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_PERSON_BACK))
-        self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_PERSON_FORWARD))
-        self.svm_person_left.experiment.Store(os.path.join(file_path, value.STR_PERSON_LEFT))
-        self.svm_person_right.experiment.Store(os.path.join(file_path, value.STR_PERSON_RIGHT))
+        self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_BACK))
+        self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_FORWARD))
+        self.svm_person_left.experiment.Store(os.path.join(file_path, value.STR_LEFT))
+        self.svm_person_right.experiment.Store(os.path.join(file_path, value.STR_RIGHT))
     
     def argmax(self, key):
         
@@ -176,7 +176,7 @@ class DirectionEstimator(object):
             classification_file.write(key + "," + self.image_to_class[key] + "\n")
         classification_file.close()
 
-    def predict_accuracy(self):
+    def predict_test_accuracy(self):
         
         print "predicting test accuracy ..."
         self.total_images = len(self.image_to_class)
