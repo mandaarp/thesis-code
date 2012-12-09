@@ -132,8 +132,24 @@ class DirectionEstimator(object):
         self.svm_person_right.experiment.Store(os.path.join(file_path, value.STR_PERSON_RIGHT))
     
     def argmax(self, key):
-        pass
+        max_value = self.svm_person_back.image_to_decision_value[key]
+        final_class = self.svm_person_back.class_name
         
+        if max_value < self.svm_person_forward:
+            max_value = self.svm_person_forward.image_to_decision_value[key]
+            final_class = self.svm_person_forward.class_name
+        
+        if max_value < self.svm_person_left:
+            max_value = self.svm_person_left.image_to_decision_value[key]
+            final_class = self.svm_person_left.class_name
+        
+        if max_value < self.svm_person_right:
+            max_value = self.svm_person_right.image_to_decision_value[key]
+            final_class = self.svm_person_right.class_name
+        
+        return final_class
         
     def decision_function_argmax(self):
+        
         pass
+            

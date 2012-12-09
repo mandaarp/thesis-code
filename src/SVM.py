@@ -49,8 +49,16 @@ class SVM(object):
         self.testing_decision_values = self.experiment.classifier.decision_function(test_features)
         
         self.testing_decision_values = self.testing_decision_values.tolist()
-        for index in range(len(self.testing_decision_values)):
-            self.image_to_decision_value[self.experiment.test_images[1][index]] = self.testing_decision_values[index][0]
         
+        if len(self.experiment.test_images[1]) > 0:
+            for index in range(len(self.testing_decision_values)):
+                self.image_to_decision_value[self.experiment.test_images[1][index]] = self.testing_decision_values[index][0]
+        elif len(self.experiment.test_images[0]) > 0:
+            for index in range(len(self.testing_decision_values)):
+                self.image_to_decision_value[self.experiment.test_images[0][index]] = self.testing_decision_values[index][0]
+        else:
+            print "ERROR: invalid experiment.test_images in " + self.class_name
+            return
+            
         return self.image_to_decision_value
         
