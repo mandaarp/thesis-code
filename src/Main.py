@@ -20,8 +20,8 @@ if __name__ == '__main__':
 #    print decision_values
 
     direction_estimator = de.DirectionEstimator(value.TRAINING_IMAGES_PATH, 
-                                                value.ALL_TESTING_IMAGES_PATH,
-                                                debug=True)
+                                                value.ALL_TESTING_IMAGES_PATH)
+#                                                debug=True)
     
     direction_estimator.generate_svm()
     
