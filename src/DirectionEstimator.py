@@ -25,6 +25,7 @@ class DirectionEstimator(object):
         self.svm_person_right = None
         self.svm_person_back = None
         self.svm_person_forward = None
+        self.image_to_class = {}
         
     def generate_svm(self):
         
@@ -151,5 +152,19 @@ class DirectionEstimator(object):
         
     def decision_function_argmax(self):
         
+               
+        for image in self.svm_person_back.image_to_decision_value.iterkeys():
+            self.image_to_class[image] = self.argmax(image)
+        
+        return self.image_to_class    
+
+    def dump_classification(self, file_path):
+
+        print "writing classifications in " + file_path + " ..."        
+        classification_file = open(file_path, 'w')
+        for key in self.image_to_class.iterkeys():
+            classification_file.write(key + "," + self.image_to_class[key] + "\n")
+        classification_file.close()
+
+    def predict_accuracy(self):
         pass
-            

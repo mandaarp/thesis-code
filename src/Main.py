@@ -35,3 +35,6 @@ if __name__ == '__main__':
 
     direction_estimator.dump_experiments(".")
 
+    direction_estimator.decision_function_argmax()
+    
+    direction_estimator.dump_classification("classification_result.csv")
