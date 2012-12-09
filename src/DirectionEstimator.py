@@ -26,6 +26,9 @@ class DirectionEstimator(object):
         self.svm_person_back = None
         self.svm_person_forward = None
         self.image_to_class = {}
+        self.total_test_images = 0
+        self.positives = 0
+        self.negatives = 0
         
     def generate_svm(self):
         
@@ -174,4 +177,12 @@ class DirectionEstimator(object):
         classification_file.close()
 
     def predict_accuracy(self):
-        pass
+        
+        print "predicting test accuracy ..."
+        self.total_images = len(self.image_to_class)
+        
+        for key in self.image_to_class.iterkeys():
+            if self.image_to_class[key] in key:
+                self.positives = self.positives + 1
+            
+        return (self.positives / self.total_images)

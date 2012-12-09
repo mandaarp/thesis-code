@@ -38,3 +38,7 @@ if __name__ == '__main__':
     direction_estimator.decision_function_argmax()
     
     direction_estimator.dump_classification("classification_result.csv")
+    
+    test_accuracy = direction_estimator.predict_accuracy()
+    
+    print "\n\ntest accuracy: " + str(test_accuracy * 100.0)
