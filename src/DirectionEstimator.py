@@ -188,4 +188,4 @@ class DirectionEstimator(object):
         print "self.positives: " + str(self.positives)
         print "self.total_images: " + str(self.total_images)
         
-        return (self.positives / self.total_images)
+        return (float(self.positives) / float(self.total_images))
