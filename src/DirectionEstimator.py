@@ -136,15 +136,15 @@ class DirectionEstimator(object):
         max_value = self.svm_person_back.image_to_decision_value[key]
         final_class = self.svm_person_back.class_name
         
-        if max_value < self.svm_person_forward:
+        if max_value < self.svm_person_forward.image_to_decision_value[key]:
             max_value = self.svm_person_forward.image_to_decision_value[key]
             final_class = self.svm_person_forward.class_name
         
-        if max_value < self.svm_person_left:
+        if max_value < self.svm_person_left.image_to_decision_value[key]:
             max_value = self.svm_person_left.image_to_decision_value[key]
             final_class = self.svm_person_left.class_name
         
-        if max_value < self.svm_person_right:
+        if max_value < self.svm_person_right.image_to_decision_value[key]:
             max_value = self.svm_person_right.image_to_decision_value[key]
             final_class = self.svm_person_right.class_name
         
