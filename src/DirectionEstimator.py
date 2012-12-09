@@ -140,8 +140,8 @@ class DirectionEstimator(object):
         if self.debug is True:
             
             if max_value < self.svm_person_forward.image_to_decision_value[key]:
-            max_value = self.svm_person_forward.image_to_decision_value[key]
-            final_class = self.svm_person_forward.class_name
+                max_value = self.svm_person_forward.image_to_decision_value[key]
+                final_class = self.svm_person_forward.class_name
             
             return 
         
