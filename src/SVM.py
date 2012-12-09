@@ -52,10 +52,10 @@ class SVM(object):
         
         if len(self.experiment.test_images[1]) > 0:
             for index in range(len(self.testing_decision_values)):
-                self.image_to_decision_value[self.experiment.test_images[1][index]] = self.testing_decision_values[index][0]
+                self.image_to_decision_value[os.path.basename(self.experiment.test_images[1][index])] = self.testing_decision_values[index][0]
         elif len(self.experiment.test_images[0]) > 0:
             for index in range(len(self.testing_decision_values)):
-                self.image_to_decision_value[self.experiment.test_images[0][index]] = self.testing_decision_values[index][0]
+                self.image_to_decision_value[os.path.basename(self.experiment.test_images[0][index])] = self.testing_decision_values[index][0]
         else:
             print "ERROR: invalid experiment.test_images in " + self.class_name
             return
