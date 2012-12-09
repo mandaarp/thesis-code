@@ -185,7 +185,7 @@ class DirectionEstimator(object):
             if self.image_to_class[key] in key:
                 print "match found: " + key + " -> " + self.image_to_class[key] + "\n" 
                 self.positives = self.positives + 1
-        print "self.positives: " + self.positives
-        print "self.total_images: " + self.total_images
+        print "self.positives: " + str(self.positives)
+        print "self.total_images: " + str(self.total_images)
         
         return (self.positives / self.total_images)
