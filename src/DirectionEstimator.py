@@ -143,7 +143,7 @@ class DirectionEstimator(object):
                 max_value = self.svm_person_forward.image_to_decision_value[key]
                 final_class = self.svm_person_forward.class_name
             
-            return 
+            return final_class
         
         if max_value < self.svm_person_forward.image_to_decision_value[key]:
             max_value = self.svm_person_forward.image_to_decision_value[key]
@@ -163,9 +163,7 @@ class DirectionEstimator(object):
         
                
         for image in self.svm_person_back.image_to_decision_value.iterkeys():
-            self.image_to_class[image] = self.argmax(image)
-        
-        return self.image_to_class    
+            self.image_to_class[image] = self.argmax(image)  
 
     def dump_classification(self, file_path):
 
