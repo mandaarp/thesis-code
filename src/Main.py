@@ -31,7 +31,7 @@ if __name__ == '__main__':
     
     direction_estimator.test()
     
-    direction_estimator.print_decision_values()
+#    direction_estimator.print_decision_values()
 
     direction_estimator.dump_experiments(".")
 
@@ -40,5 +40,5 @@ if __name__ == '__main__':
     direction_estimator.dump_classification("classification_result.csv")
     
     test_accuracy = direction_estimator.predict_test_accuracy()
-    
+    print "\n Test Accuracy in fraction: " + str(test_accuracy)
     print "\n\ntest accuracy: " + str(test_accuracy * 100.0)
