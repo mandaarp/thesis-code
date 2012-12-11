@@ -85,7 +85,7 @@ class DirectionEstimator(object):
         self.svm_person_back.train()
         self.svm_person_forward.train()
         self.svm_person_left.train()
-        self.svm_person_right.train
+        self.svm_person_right.train()
     
     def test(self):
         
