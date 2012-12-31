@@ -38,12 +38,15 @@ class DirectionEstimator(object):
             if self.testing_images_path is None:
                 self.svm_person_back = svm.SVM()
                 self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK))
+                
                 self.svm_person_forward = svm.SVM()
                 self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT))
+            
             else:
                 self.svm_person_back = svm.SVM()
                 self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_BACK), 
                                    os.path.join(self.testing_images_path, value.STR_BACK))
+            
                 self.svm_person_forward = svm.SVM()
                 self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_FRONT),
                                           os.path.join(self.testing_images_path, value.STR_FRONT))

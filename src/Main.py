@@ -21,8 +21,8 @@ if __name__ == '__main__':
 #    print decision_values
     
     if config.DATASET_AUTO is True:
-        direction_estimator = de.DirectionEstimator(config.IMAGES_PATH)
-#                                                debug=True)
+        direction_estimator = de.DirectionEstimator(config.IMAGES_PATH,
+                                                debug=True)
     else:
         direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
                                                 config.ALL_TESTING_IMAGES_PATH)
