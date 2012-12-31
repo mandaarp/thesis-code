@@ -48,7 +48,7 @@ class DirectionEstimator(object):
         
         print "generating SVMs - one for each direction ..."        
 
-        if self.testing_image_path is None:
+        if self.testing_images_path is None:
             
             self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK))    
             self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT))
