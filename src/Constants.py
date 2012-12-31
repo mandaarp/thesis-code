@@ -5,12 +5,12 @@ Created on Nov 30, 2012
 '''
 import os
 
-TRAINING_IMAGES_PATH = os.path.join(os.environ['HOME'], "thesis/demo/images/person/train")
-ALL_TESTING_IMAGES_PATH = os.path.join(os.environ['HOME'], "thesis/demo/images/person/test/all")
-
 STR_BACK = "back"
-STR_FORWARD = "forward"
+STR_FRONT = "front"
 STR_LEFT = "left"
 STR_RIGHT = "right"
 
-NUM_OF_PROTOTYPES = 200
+STR_PEDESTRIAN_BACK = "pedestrian-back"
+STR_PEDESTRIAN_FRONT = "pedestrian-front"
+STR_PEDESTRIAN_LEFT = "pedestrian-left"
+STR_PEDESTRIAN_RIGHT = "pedestrian-right"

@@ -13,7 +13,7 @@ class DirectionEstimator(object):
     classdocs
     '''
 
-    def __init__(self, training_images_path, testing_images_path, debug=False):
+    def __init__(self, training_images_path, testing_images_path=None, debug=False):
         '''
         Constructor
         '''
@@ -35,24 +35,37 @@ class DirectionEstimator(object):
         if self.debug is True:
             print "generating SVMs - debug mode ..."
             
-            self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_BACK), 
+            if self.testing_images_path is None:
+                self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK))
+                self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT))
+            else:
+                self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_BACK), 
                                    os.path.join(self.testing_images_path, value.STR_BACK))
+                self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_FRONT),
+                                          os.path.join(self.testing_images_path, value.STR_FRONT))
             
-            self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_FORWARD),
-                                          os.path.join(self.testing_images_path, value.STR_FORWARD))
             return
         
         print "generating SVMs - one for each direction ..."        
-        self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_BACK), 
+
+        if self.testing_image_path is None:
+            
+            self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK))    
+            self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT))
+            self.svm_person_left = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_LEFT))
+            self.svm_person_right = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_RIGHT))
+        
+        else:
+            self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_BACK), 
                                    os.path.join(self.testing_images_path, value.STR_BACK))
     
-        self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_FORWARD),
-                                          os.path.join(self.testing_images_path, value.STR_FORWARD))
+            self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_FRONT),
+                                          os.path.join(self.testing_images_path, value.STR_FRONT))
         
-        self.svm_person_left = svm.SVM(os.path.join(self.training_images_path, value.STR_LEFT),
+            self.svm_person_left = svm.SVM(os.path.join(self.training_images_path, value.STR_LEFT),
                                        os.path.join(self.testing_images_path, value.STR_LEFT))
         
-        self.svm_person_right = svm.SVM(os.path.join(self.training_images_path, value.STR_RIGHT),
+            self.svm_person_right = svm.SVM(os.path.join(self.training_images_path, value.STR_RIGHT),
                                         os.path.join(self.testing_images_path, value.STR_RIGHT))
  
     def imprint_s2_prototypes(self, num_of_prototypes):
