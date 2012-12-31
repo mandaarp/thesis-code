@@ -36,12 +36,16 @@ class DirectionEstimator(object):
             print "generating SVMs - debug mode ..."
             
             if self.testing_images_path is None:
-                self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK))
-                self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT))
+                self.svm_person_back = svm.SVM()
+                self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK))
+                self.svm_person_forward = svm.SVM()
+                self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT))
             else:
-                self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_BACK), 
+                self.svm_person_back = svm.SVM()
+                self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_BACK), 
                                    os.path.join(self.testing_images_path, value.STR_BACK))
-                self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_FRONT),
+                self.svm_person_forward = svm.SVM()
+                self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_FRONT),
                                           os.path.join(self.testing_images_path, value.STR_FRONT))
             
             return
@@ -50,22 +54,33 @@ class DirectionEstimator(object):
 
         if self.testing_images_path is None:
             
-            self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK))    
-            self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT))
-            self.svm_person_left = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_LEFT))
-            self.svm_person_right = svm.SVM(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_RIGHT))
+            self.svm_person_back = svm.SVM()
+            self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK))    
+          
+            self.svm_person_forward = svm.SVM()
+            self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT))
+            
+            self.svm_person_left = svm.SVM()
+            self.svm_person_left.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_LEFT))
+            
+            self.svm_person_right = svm.SVM()
+            self.svm_person_right.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_RIGHT))
         
         else:
-            self.svm_person_back = svm.SVM(os.path.join(self.training_images_path, value.STR_BACK), 
+            self.svm_person_back = svm.SVM()
+            self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_BACK), 
                                    os.path.join(self.testing_images_path, value.STR_BACK))
     
-            self.svm_person_forward = svm.SVM(os.path.join(self.training_images_path, value.STR_FRONT),
+            self.svm_person_forward = svm.SVM()
+            self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_FRONT),
                                           os.path.join(self.testing_images_path, value.STR_FRONT))
         
-            self.svm_person_left = svm.SVM(os.path.join(self.training_images_path, value.STR_LEFT),
+            self.svm_person_left = svm.SVM()
+            self.svm_person_left.set_data(os.path.join(self.training_images_path, value.STR_LEFT),
                                        os.path.join(self.testing_images_path, value.STR_LEFT))
         
-            self.svm_person_right = svm.SVM(os.path.join(self.training_images_path, value.STR_RIGHT),
+            self.svm_person_right = svm.SVM()
+            self.svm_person_right.set_data(os.path.join(self.training_images_path, value.STR_RIGHT),
                                         os.path.join(self.testing_images_path, value.STR_RIGHT))
  
     def imprint_s2_prototypes(self, num_of_prototypes):
