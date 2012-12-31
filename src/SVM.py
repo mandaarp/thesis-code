@@ -17,8 +17,7 @@ class SVM(object):
         '''
         Constructor
         '''       
-        print "initializing the " + self.class_name + " SVM ..."
-        
+
         self.training_accuracy = None
         self.testing_accuracy = None
         self.testing_decision_values = None
@@ -29,6 +28,8 @@ class SVM(object):
     def set_data(self, training_images_path, testing_images_path=None):
         
         self.class_name = os.path.basename(training_images_path)
+
+        print "initializing the " + self.class_name + " SVM ..."        
         
         self.training_images_path = training_images_path
         self.testing_images_path = testing_images_path
