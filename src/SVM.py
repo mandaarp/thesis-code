@@ -17,16 +17,20 @@ class SVM(object):
         '''
         Constructor
         '''       
-
+        self.training_images_path = None
+        self.testing_images_path = None
+        self.class_name = None
         self.training_accuracy = None
         self.testing_accuracy = None
         self.testing_decision_values = None
         self.image_to_decision_value = {}
+        self.experiment = None
         
-    @classmethod
     def set_data(self, training_images_path, testing_images_path=None):
         
+        print "training path: " + training_images_path
         self.class_name = os.path.basename(training_images_path)
+        print "class name: " + os.path.basename(training_images_path)
         
         print "initializing the " + self.class_name + " SVM ..."        
         
@@ -35,25 +39,22 @@ class SVM(object):
         self.experiment = SetExperiment()
         
         if testing_images_path is None:
-            self.experiment.SetCorpus(self.training_images_path, balance=True)
+            self.experiment.SetCorpus(self.training_images_path)
         else:
             self.experiment.SetTrainTestSplitFromDirs(self.training_images_path, self.testing_images_path)
     
-    @classmethod
     def configure_svm(self, num_of_prototypes):
         
         print "configuring the " + self.class_name + " SVM ..."
         self.num_of_prototypes = num_of_prototypes
         self.experiment.ImprintS2Prototypes(self.num_of_prototypes)
         
-    @classmethod
     def train(self):
         
         print "training the " + self.class_name + " SVM ..."
         self.training_accuracy = self.experiment.TrainSvm()
         print "training accuracy: " + str(self.training_accuracy)
     
-    @classmethod
     def test(self):
         
         print "testing the " + self.class_name + " SVM ..."
