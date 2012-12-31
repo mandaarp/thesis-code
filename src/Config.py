@@ -10,5 +10,5 @@ TRAINING_IMAGES_PATH = os.path.join(os.environ['HOME'], "thesis-images/dataset/t
 ALL_TESTING_IMAGES_PATH = os.path.join(os.environ['HOME'], "thesis-images/dataset/test")
 IMAGES_PATH = os.path.join(os.environ['HOME'], "thesis-images/dataset/auto")
 
-DATASET_AUTO = True
+DATASET_AUTO = False
 NUM_OF_PROTOTYPES = 200

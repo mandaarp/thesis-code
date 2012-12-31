@@ -44,12 +44,12 @@ class DirectionEstimator(object):
             
             else:
                 self.svm_person_back = svm.SVM()
-                self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_BACK), 
-                                   os.path.join(self.testing_images_path, value.STR_BACK))
+                self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK), 
+                                   os.path.join(self.testing_images_path, value.STR_PEDESTRIAN_BACK))
             
                 self.svm_person_forward = svm.SVM()
-                self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_FRONT),
-                                          os.path.join(self.testing_images_path, value.STR_FRONT))
+                self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT),
+                                          os.path.join(self.testing_images_path, value.STR_PEDESTRIAN_FRONT))
             
             return
         
@@ -71,20 +71,20 @@ class DirectionEstimator(object):
         
         else:
             self.svm_person_back = svm.SVM()
-            self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_BACK), 
-                                   os.path.join(self.testing_images_path, value.STR_BACK))
+            self.svm_person_back.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_BACK), 
+                                   os.path.join(self.testing_images_path, value.STR_PEDESTRIAN_BACK))
     
             self.svm_person_forward = svm.SVM()
-            self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_FRONT),
-                                          os.path.join(self.testing_images_path, value.STR_FRONT))
+            self.svm_person_forward.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_FRONT),
+                                          os.path.join(self.testing_images_path, value.STR_PEDESTRIAN_FRONT))
         
             self.svm_person_left = svm.SVM()
-            self.svm_person_left.set_data(os.path.join(self.training_images_path, value.STR_LEFT),
-                                       os.path.join(self.testing_images_path, value.STR_LEFT))
+            self.svm_person_left.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_LEFT),
+                                       os.path.join(self.testing_images_path, value.STR_PEDESTRIAN_LEFT))
         
             self.svm_person_right = svm.SVM()
-            self.svm_person_right.set_data(os.path.join(self.training_images_path, value.STR_RIGHT),
-                                        os.path.join(self.testing_images_path, value.STR_RIGHT))
+            self.svm_person_right.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_RIGHT),
+                                        os.path.join(self.testing_images_path, value.STR_PEDESTRIAN_RIGHT))
  
     def imprint_s2_prototypes(self, num_of_prototypes):
         
@@ -155,16 +155,16 @@ class DirectionEstimator(object):
         if self.debug is True:
             
             print "dumping debug mode experiments at " + file_path + " ..."
-            self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_BACK))
-            self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_FORWARD))
+            self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_BACK))
+            self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_FRONT))
             
             return
         
         print "dumping experiments at " + file_path + " ..."
-        self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_BACK))
-        self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_FORWARD))
-        self.svm_person_left.experiment.Store(os.path.join(file_path, value.STR_LEFT))
-        self.svm_person_right.experiment.Store(os.path.join(file_path, value.STR_RIGHT))
+        self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_BACK))
+        self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_FRONT))
+        self.svm_person_left.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_LEFT))
+        self.svm_person_right.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_RIGHT))
     
     def argmax(self, key):
         
