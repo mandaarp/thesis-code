@@ -22,17 +22,17 @@ class SVM(object):
         self.testing_accuracy = None
         self.testing_decision_values = None
         self.image_to_decision_value = {}
-        self.experiment = SetExperiment()
         
     @classmethod
     def set_data(self, training_images_path, testing_images_path=None):
         
         self.class_name = os.path.basename(training_images_path)
-
+        
         print "initializing the " + self.class_name + " SVM ..."        
         
         self.training_images_path = training_images_path
         self.testing_images_path = testing_images_path
+        self.experiment = SetExperiment()
         
         if testing_images_path is None:
             self.experiment.SetCorpus(self.training_images_path, balance=True)
