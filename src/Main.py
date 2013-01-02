@@ -7,6 +7,7 @@ Created on Nov 30, 2012
 import DirectionEstimator as de
 import Constants as value
 import Config as config
+import sys
 
 if __name__ == '__main__':
     
@@ -20,13 +21,13 @@ if __name__ == '__main__':
 #    
 #    print decision_values
     
-    if config.DATASET_AUTO is True:
-        direction_estimator = de.DirectionEstimator(config.IMAGES_PATH,
+    if sys.argv[1] is 'debug':
+        direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
+                                                config.ALL_TESTING_IMAGES_PATH,
                                                 debug=True)
     else:
-        direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
+                direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
                                                 config.ALL_TESTING_IMAGES_PATH)
-#                                                debug=True)
     
     direction_estimator.generate_svm()
     
@@ -43,7 +44,10 @@ if __name__ == '__main__':
     direction_estimator.decision_function_argmax()
     
     direction_estimator.dump_classification("classification_result.csv")
+
+    direction_estimator.print_confusion_matrix()
     
     test_accuracy = direction_estimator.predict_test_accuracy()
+
     print "\n Test Accuracy in fraction: " + str(test_accuracy)
     print "\n\ntest accuracy: " + str(test_accuracy * 100.0)
