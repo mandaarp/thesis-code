@@ -7,7 +7,7 @@ Created on Nov 30, 2012
 import DirectionEstimator as de
 import Constants as value
 import Config as config
-import sys
+import argparse
 
 if __name__ == '__main__':
     
@@ -21,24 +21,27 @@ if __name__ == '__main__':
 #    
 #    print decision_values
     
-    if sys.argv[1] is 'debug':
-        direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
-                                                config.ALL_TESTING_IMAGES_PATH,
-                                                debug=True)
-    else:
-                direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
-                                                config.ALL_TESTING_IMAGES_PATH)
     
+    parser = argparse.ArgumentParser(description='entry point to direction estimator')
+    parser.add_argument("-p","--prototypes", type=int, action="store",dest='num_of_prototypes', help='number of S2 prototypes to imprint')
+    parser.add_argument("-d","--debug", action="store_true", dest='debug', help='debug mode execution')
+    args = parser.parse_args()
+    
+    print "num_of_prototypes: " + str(args.num_of_prototypes)
+    print "debug mode: " + str(args.debug)
+        
+    direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
+                                                config.ALL_TESTING_IMAGES_PATH,
+                                                debug=args.debug)
+        
     direction_estimator.generate_svm()
     
-    direction_estimator.imprint_s2_prototypes(config.NUM_OF_PROTOTYPES)
+    direction_estimator.imprint_s2_prototypes(args.num_of_prototypes)
     
     direction_estimator.train()
     
     direction_estimator.test()
     
-#    direction_estimator.print_decision_values()
-
     direction_estimator.dump_experiments(".")
 
     direction_estimator.decision_function_argmax()
