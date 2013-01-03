@@ -242,7 +242,7 @@ class DirectionEstimator(object):
     
     def update_confusion_matrix(self, predicted_class, image_path):
         
-        if value.STR_PEDESTRIAN_BACK is predicted_class:
+        if value.STR_PEDESTRIAN_BACK == predicted_class:
             if value.STR_PEDESTRIAN_FRONT in image_path:
                 self.back_as_front = self.back_as_front + 1
             elif value.STR_PEDESTRIAN_LEFT in image_path:
@@ -250,7 +250,7 @@ class DirectionEstimator(object):
             elif value.STR_PEDESTRIAN_RIGHT in image_path:
                 self.back_as_right = self.back_as_right + 1
              
-        if value.STR_PEDESTRIAN_FRONT is predicted_class:
+        if value.STR_PEDESTRIAN_FRONT == predicted_class:
             if value.STR_PEDESTRIAN_BACK in image_path:
                 self.front_as_back = self.front_as_back + 1
             elif value.STR_PEDESTRIAN_LEFT in image_path:
@@ -258,7 +258,7 @@ class DirectionEstimator(object):
             elif value.STR_PEDESTRIAN_RIGHT in image_path:
                 self.front_as_right = self.front_as_right + 1
 
-        if value.STR_PEDESTRIAN_LEFT is predicted_class:
+        if value.STR_PEDESTRIAN_LEFT == predicted_class:
             if value.STR_PEDESTRIAN_BACK in image_path:
                 self.left_as_back = self.left_as_back + 1
             elif value.STR_PEDESTRIAN_FRONT in image_path:
@@ -266,7 +266,7 @@ class DirectionEstimator(object):
             elif value.STR_PEDESTRIAN_RIGHT in image_path:
                 self.left_as_right = self.left_as_right + 1
 
-        if value.STR_PEDESTRIAN_RIGHT is predicted_class:
+        if value.STR_PEDESTRIAN_RIGHT == predicted_class:
             if value.STR_PEDESTRIAN_BACK in image_path:
                 self.right_as_back = self.right_as_back + 1
             elif value.STR_PEDESTRIAN_FRONT in image_path:
