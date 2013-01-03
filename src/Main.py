@@ -47,10 +47,10 @@ if __name__ == '__main__':
     direction_estimator.decision_function_argmax()
     
     direction_estimator.dump_classification("classification_result.csv")
-
-    direction_estimator.print_confusion_matrix()
     
     test_accuracy = direction_estimator.predict_test_accuracy()
+    
+    direction_estimator.print_confusion_matrix()
 
     print "\n Test Accuracy in fraction: " + str(test_accuracy)
     print "\n\ntest accuracy: " + str(test_accuracy * 100.0)
