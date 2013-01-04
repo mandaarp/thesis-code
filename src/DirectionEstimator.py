@@ -49,7 +49,7 @@ class DirectionEstimator(object):
     def generate_svm(self):
         
         if self.debug is True:
-            print "generating SVMs - debug mode ..."
+            print "DirectionEstimator: generating SVMs - debug mode ..."
             
             if self.testing_images_path is None:
                 self.svm_person_back = svm.SVM()
@@ -69,7 +69,7 @@ class DirectionEstimator(object):
             
             return
         
-        print "generating SVMs - one for each direction ..."        
+        print "DirectionEstimator: generating SVMs - one for each direction ..."        
 
         if self.testing_images_path is None:
             
@@ -102,33 +102,33 @@ class DirectionEstimator(object):
             self.svm_person_right.set_data(os.path.join(self.training_images_path, value.STR_PEDESTRIAN_RIGHT),
                                         os.path.join(self.testing_images_path, value.STR_PEDESTRIAN_RIGHT))
  
-    def imprint_s2_prototypes(self, num_of_prototypes):
+    def imprint_s2_prototypes(self, proto_gen_method, num_of_prototypes):
         
         if self.debug is True:
             
-            print "imprinting S2 prototypes for each SVM - debug mode ..."            
-            self.svm_person_back.configure_svm(num_of_prototypes)
-            self.svm_person_forward.configure_svm(num_of_prototypes)
+            print "DirectionEstimator: imprinting " + str(num_of_prototypes) + " S2 prototypes for each SVM using " + proto_gen_method + " - debug mode ..."            
+            self.svm_person_back.configure_svm(proto_gen_method, num_of_prototypes)
+            self.svm_person_forward.configure_svm(proto_gen_method, num_of_prototypes)
             
             return
         
-        print "imprinting S2 prototypes for each SVM ..."
-        self.svm_person_back.configure_svm(num_of_prototypes)
-        self.svm_person_forward.configure_svm(num_of_prototypes)
-        self.svm_person_left.configure_svm(num_of_prototypes)
-        self.svm_person_right.configure_svm(num_of_prototypes)
+        print "DirectionEstimator: imprinting " + str(num_of_prototypes) + " S2 prototypes for each SVM using " + proto_gen_method + " ..."
+        self.svm_person_back.configure_svm(proto_gen_method, num_of_prototypes)
+        self.svm_person_forward.configure_svm(proto_gen_method, num_of_prototypes)
+        self.svm_person_left.configure_svm(proto_gen_method, num_of_prototypes)
+        self.svm_person_right.configure_svm(proto_gen_method, num_of_prototypes)
         
     def train(self):
         
         if self.debug is True:
             
-            print "training each SVM - debug mode"
+            print "DirectionEstimator: training each SVM - debug mode"
             self.svm_person_back.train()
             self.svm_person_forward.train()
             
             return
         
-        print "training each SVM ..."
+        print "DirectionEstimator: training each SVM ..."
         self.svm_person_back.train()
         self.svm_person_forward.train()
         self.svm_person_left.train()
@@ -138,13 +138,13 @@ class DirectionEstimator(object):
         
         if self.debug is True:
             
-            print "testing each SVM - debug mode ..."
+            print "DirectionEstimator: testing each SVM - debug mode ..."
             self.svm_person_back.test()
             self.svm_person_forward.test()
             
             return
         
-        print "testing each SVM ..."
+        print "DirectionEstimator: testing each SVM ..."
         self.svm_person_back.test()
         self.svm_person_forward.test()
         self.svm_person_left.test()
@@ -154,13 +154,13 @@ class DirectionEstimator(object):
         
         if self.debug is True:
             
-            print "printing image-to-decision-values - debug mode ..."
+            print "DirectionEstimator: printing image-to-decision-values - debug mode ..."
             print self.svm_person_back.image_to_decision_value
             print self.svm_person_forward.image_to_decision_value
             
             return
             
-        print "printing image-to-decision-values ..."
+        print "DirectionEstimator: printing image-to-decision-values ..."
         print self.svm_person_back.image_to_decision_value
         print self.svm_person_forward.image_to_decision_value
         print self.svm_person_left.image_to_decision_value
@@ -170,13 +170,13 @@ class DirectionEstimator(object):
         
         if self.debug is True:
             
-            print "dumping debug mode experiments at " + file_path + " ..."
+            print "DirectionEstimator: dumping debug mode experiments at " + file_path + " ..."
             self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_BACK))
             self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_FRONT))
             
             return
         
-        print "dumping experiments at " + file_path + " ..."
+        print "DirectionEstimator: dumping experiments at " + file_path + " ..."
         self.svm_person_back.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_BACK))
         self.svm_person_forward.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_FRONT))
         self.svm_person_left.experiment.Store(os.path.join(file_path, value.STR_PEDESTRIAN_LEFT))
@@ -217,7 +217,7 @@ class DirectionEstimator(object):
 
     def dump_classification(self, file_path):
 
-        print "writing classifications in " + file_path + " ..."        
+        print "DirectionEstimator: writing classifications in " + file_path + " ..."        
         classification_file = open(file_path, 'w')
         for key in self.image_to_class.iterkeys():
             classification_file.write(key + "," + self.image_to_class[key] + "\n")
@@ -225,18 +225,18 @@ class DirectionEstimator(object):
 
     def predict_test_accuracy(self):
         
-        print "predicting test accuracy ..."
+        print "DirectionEstimator: predicting test accuracy ..."
         self.total_images = len(self.image_to_class)
         
         for key in self.image_to_class.iterkeys():
             if self.image_to_class[key] in key:
-                print "match found: " + key + " -> " + self.image_to_class[key] + "\n" 
+#                print "match found: " + key + " -> " + self.image_to_class[key] + "\n" 
                 self.positives = self.positives + 1
             else:
                 self.update_confusion_matrix(self.image_to_class[key],key)
                  
-        print "self.positives: " + str(self.positives)
-        print "self.total_images: " + str(self.total_images)
+        print "DirectionEstimator: self.positives: " + str(self.positives)
+        print "DirectionEstimator: self.total_images: " + str(self.total_images)
         
         return (float(self.positives) / float(self.total_images))
     

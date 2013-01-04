@@ -7,6 +7,7 @@ Created on Nov 30, 2012
 from glimpse.glab import *
 from glimpse.util import svm
 import os
+import Constants as value
 
 class SVM(object):
     '''
@@ -28,11 +29,11 @@ class SVM(object):
         
     def set_data(self, training_images_path, testing_images_path=None):
         
-        print "training path: " + training_images_path
+        print "SVM: training path: " + training_images_path
         self.class_name = os.path.basename(training_images_path)
-        print "class name: " + os.path.basename(training_images_path)
+        print "SVM: class name: " + os.path.basename(training_images_path)
         
-        print "initializing the " + self.class_name + " SVM ..."        
+        print "SVM: initializing the " + self.class_name + " SVM ..."        
         
         self.training_images_path = training_images_path
         self.testing_images_path = testing_images_path
@@ -43,21 +44,35 @@ class SVM(object):
         else:
             self.experiment.SetTrainTestSplitFromDirs(self.training_images_path, self.testing_images_path)
     
-    def configure_svm(self, num_of_prototypes):
+    def configure_svm(self, proto_gen_method, num_of_prototypes):
         
-        print "configuring the " + self.class_name + " SVM ..."
+        print "SVM: configuring the " + self.class_name + " SVM ..."
         self.num_of_prototypes = num_of_prototypes
-        self.experiment.ImprintS2Prototypes(self.num_of_prototypes)
+        
+        if value.STR_IMPRINT_S2_PROTOTYPES == proto_gen_method:
+            self.experiment.ImprintS2Prototypes(self.num_of_prototypes)
+            
+        if value.STR_MAKE_HISTOGRAM_RANDOM_S2_PROTOTYPES == proto_gen_method:
+            self.experiment.MakeHistogramRandomS2Prototypes(self.num_of_prototypes)
+        
+        if value.STR_MAKE_NORMAL_RANDOM_S2_PROTOTYPES == proto_gen_method:
+            self.experiment.MakeNormalRandomS2Prototypes(self.num_of_prototypes)
+        
+        if value.STR_MAKE_SHUFFLED_RANDOM_S2_PROTOTYPES == proto_gen_method:
+            self.experiment.MakeShuffledRandomS2Prototypes(self.num_of_prototypes)
+        
+        if value.STR_MAKE_UNIFORM_RANDOM_S2_PROTOTYPES == proto_gen_method:
+            self.experiment.MakeUniformRandomS2Prototypes(self.num_of_prototypes)
         
     def train(self):
         
-        print "training the " + self.class_name + " SVM ..."
+        print "SVM: training the " + self.class_name + " SVM ..."
         self.training_accuracy = self.experiment.TrainSvm()
-        print "training accuracy: " + str(self.training_accuracy)
+        print "SVM: training accuracy: " + str(self.training_accuracy)
     
     def test(self):
         
-        print "testing the " + self.class_name + " SVM ..."
+        print "SVM: testing the " + self.class_name + " SVM ..."
         test_features, test_labels = svm.PrepareFeatures(self.experiment.test_features)
         self.testing_decision_values = self.experiment.classifier.decision_function(test_features)
         

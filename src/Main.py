@@ -8,6 +8,7 @@ import DirectionEstimator as de
 import Constants as value
 import Config as config
 import argparse
+import os
 
 if __name__ == '__main__':
     
@@ -23,20 +24,30 @@ if __name__ == '__main__':
     
     
     parser = argparse.ArgumentParser(description='entry point to direction estimator')
+    parser.add_argument("-t", "--proto-gen-method", type=str, action="store",dest='proto_gen_method', help='S2 prototype generation method')
     parser.add_argument("-p","--prototypes", type=int, action="store",dest='num_of_prototypes', help='number of S2 prototypes to imprint')
+    parser.add_argument("-s", "--dataset-prefix", type=str, action="store", dest='dataset_prefix', help='dataset path prefix')
     parser.add_argument("-d","--debug", action="store_true", dest='debug', help='debug mode execution')
     args = parser.parse_args()
     
+    print "========== Experiment setup =========="
     print "num_of_prototypes: " + str(args.num_of_prototypes)
     print "debug mode: " + str(args.debug)
-        
-    direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
-                                                config.ALL_TESTING_IMAGES_PATH,
-                                                debug=args.debug)
-        
+    print "dataset_prefix: " + args.dataset_prefix
+    print "prototype generation method: " + args.proto_gen_method
+    
+    print "\n\n"
+    
+#    direction_estimator = de.DirectionEstimator(config.TRAINING_IMAGES_PATH, 
+#                                                config.ALL_TESTING_IMAGES_PATH,
+#                                                debug=args.debug)
+
+    direction_estimator = de.DirectionEstimator(os.path.join(args.dataset_prefix, value.STR_TRAIN),
+                                                os.path.join(args.dataset_prefix, value.STR_TEST),
+                                                debug=args.debug)        
     direction_estimator.generate_svm()
     
-    direction_estimator.imprint_s2_prototypes(args.num_of_prototypes)
+    direction_estimator.imprint_s2_prototypes(args.proto_gen_method, args.num_of_prototypes)
     
     direction_estimator.train()
     
