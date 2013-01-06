@@ -59,6 +59,8 @@ if __name__ == '__main__':
     
     direction_estimator.dump_classification("classification_result.csv")
     
+    direction_estimator.dump_decision_values()
+    
     test_accuracy = direction_estimator.predict_test_accuracy()
     
     direction_estimator.print_confusion_matrix()

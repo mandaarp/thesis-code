@@ -30,21 +30,27 @@ class DirectionEstimator(object):
         self.positives = 0
         self.negatives = 0
         
+        self.back_as_back = 0
         self.back_as_front = 0
         self.back_as_left = 0
         self.back_as_right = 0
         
         self.front_as_back = 0
+        self.front_as_front = 0
         self.front_as_left = 0
         self.front_as_right = 0
         
         self.left_as_back = 0
         self.left_as_front = 0
+        self.left_as_left = 0
         self.left_as_right = 0
         
         self.right_as_back = 0
         self.right_as_front = 0
         self.right_as_left = 0
+        self.right_as_right = 0
+        
+        self.decision_values_file_data = []
         
     def generate_svm(self):
         
@@ -207,11 +213,18 @@ class DirectionEstimator(object):
             max_value = self.svm_person_right.image_to_decision_value[key]
             final_class = self.svm_person_right.class_name
         
+        self.decision_values_file_data.append(str(key) + "," + str(self.svm_person_back.image_to_decision_value[key]) + "," + 
+                                              str(self.svm_person_forward.image_to_decision_value[key]) + "," + 
+                                              str(self.svm_person_left.image_to_decision_value[key]) + "," +
+                                              str(self.svm_person_right.image_to_decision_value[key]) + "," + 
+                                              str(final_class))
+        
         return final_class
         
     def decision_function_argmax(self):
         
-               
+        self.decision_values_file_data.append("Actual class,pedestrian-back, pedestrian-front, pedestrian-left, pedestrian-right, winner")
+        
         for image in self.svm_person_back.image_to_decision_value.iterkeys():
             self.image_to_class[image] = self.argmax(image)  
 
@@ -243,36 +256,44 @@ class DirectionEstimator(object):
     def update_confusion_matrix(self, predicted_class, image_path):
         
         if value.STR_PEDESTRIAN_BACK == predicted_class:
-            if value.STR_PEDESTRIAN_FRONT in image_path:
-                self.back_as_front = self.back_as_front + 1
+            if value.STR_PEDESTRIAN_BACK in image_path:
+                self.back_as_back = self.back_as_back + 1
+            elif value.STR_PEDESTRIAN_FRONT in image_path:
+                self.front_as_back = self.front_as_back + 1
             elif value.STR_PEDESTRIAN_LEFT in image_path:
-                self.back_as_left = self.back_as_left + 1
+                self.left_as_back = self.left_as_back + 1
             elif value.STR_PEDESTRIAN_RIGHT in image_path:
-                self.back_as_right = self.back_as_right + 1
+                self.right_as_back = self.right_as_back + 1
              
         if value.STR_PEDESTRIAN_FRONT == predicted_class:
             if value.STR_PEDESTRIAN_BACK in image_path:
-                self.front_as_back = self.front_as_back + 1
+                self.back_as_front = self.back_as_front + 1
+            elif value.STR_PEDESTRIAN_FRONT in image_path:
+                self.front_as_front = self.front_as_front + 1
             elif value.STR_PEDESTRIAN_LEFT in image_path:
-                self.front_as_left = self.front_as_left + 1
+                self.left_as_front = self.left_as_front + 1
             elif value.STR_PEDESTRIAN_RIGHT in image_path:
-                self.front_as_right = self.front_as_right + 1
+                self.right_as_front = self.right_as_front + 1
 
         if value.STR_PEDESTRIAN_LEFT == predicted_class:
             if value.STR_PEDESTRIAN_BACK in image_path:
-                self.left_as_back = self.left_as_back + 1
+                self.back_as_left = self.back_as_left + 1
             elif value.STR_PEDESTRIAN_FRONT in image_path:
-                self.left_as_front = self.left_as_front + 1
+                self.front_as_left = self.front_as_left + 1
+            elif value.STR_PEDESTRIAN_LEFT in image_path:
+                self.left_as_left = self.left_as_left + 1
             elif value.STR_PEDESTRIAN_RIGHT in image_path:
-                self.left_as_right = self.left_as_right + 1
+                self.right_as_left = self.right_as_left + 1
 
         if value.STR_PEDESTRIAN_RIGHT == predicted_class:
             if value.STR_PEDESTRIAN_BACK in image_path:
-                self.right_as_back = self.right_as_back + 1
+                self.back_as_right = self.back_as_right + 1
             elif value.STR_PEDESTRIAN_FRONT in image_path:
-                self.right_as_front = self.right_as_front + 1
+                self.front_as_right = self.front_as_right + 1
             elif value.STR_PEDESTRIAN_LEFT in image_path:
-                self.right_as_left = self.right_as_left + 1
+                self.left_as_right = self.left_as_right + 1
+            elif value.STR_PEDESTRIAN_RIGHT in image_path:
+                self.right_as_right = self.right_as_right + 1
 
     def print_confusion_matrix(self):
         
@@ -293,3 +314,12 @@ class DirectionEstimator(object):
         print "right-as-front: " + str(self.right_as_front)
         print "right-as-left : " + str(self.right_as_left)
         print "\n"
+
+    def dump_decision_values(self):
+        
+        decision_values_file = open(value.STR_DECISION_VALUES_FILE, "w")
+        
+        for line in range(len(self.decision_values_file_data)):
+            decision_values_file.write(self.decision_values_file_data[line] + "\n")
+            
+        decision_values_file.close()
