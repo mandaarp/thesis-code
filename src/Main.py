@@ -24,10 +24,10 @@ if __name__ == '__main__':
     
     
     parser = argparse.ArgumentParser(description='entry point to direction estimator')
-    parser.add_argument("-t", "--proto-gen-method", type=str, action="store",dest='proto_gen_method', help='S2 prototype generation method')
-    parser.add_argument("-p","--prototypes", type=int, action="store",dest='num_of_prototypes', help='number of S2 prototypes to imprint')
-    parser.add_argument("-s", "--dataset-prefix", type=str, action="store", dest='dataset_prefix', help='dataset path prefix')
-    parser.add_argument("-d","--debug", action="store_true", dest='debug', help='debug mode execution')
+    parser.add_argument("-t", "--proto-gen-method", required=True, type=str, action="store",dest='proto_gen_method', help='S2 prototype generation method')
+    parser.add_argument("-p","--prototypes", required=True, type=int, action="store",dest='num_of_prototypes', help='number of S2 prototypes to imprint')
+    parser.add_argument("-s", "--dataset-prefix", required=True, type=str, action="store", dest='dataset_prefix', help='dataset path prefix')
+    parser.add_argument("-d","--debug", required=True, action="store_true", dest='debug', help='debug mode execution')
     args = parser.parse_args()
     
     print "========== Experiment setup =========="
