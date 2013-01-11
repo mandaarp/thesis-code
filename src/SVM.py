@@ -37,8 +37,11 @@ class SVM(object):
         
         self.training_images_path = training_images_path
         self.testing_images_path = testing_images_path
+        SetModelClass('ml')
+        params = GetParams()
+        params.image_resize_method = 'scale short edge'
         self.experiment = SetExperiment()
-        
+                
         if testing_images_path is None:
             self.experiment.SetCorpus(self.training_images_path)
         else:
