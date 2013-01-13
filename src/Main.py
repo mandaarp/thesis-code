@@ -53,7 +53,7 @@ if __name__ == '__main__':
     
     direction_estimator.test()
     
-    direction_estimator.dump_experiments(".")
+#    direction_estimator.dump_experiments(".")
 
     direction_estimator.decision_function_argmax()
     
