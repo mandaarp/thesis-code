@@ -225,7 +225,7 @@ class DirectionEstimator(object):
                                               "class-pedestrian-right-count," +
                                               "winner")
         
-        for image in self.svm_person_back.image_to_decision_value.iterkeys():
+        for image in self.svm_person_back_vs_front.image_to_decision_value.iterkeys():
             self.image_to_class[image] = self.pairwise_classification(image)  
 
     def dump_classification(self, file_path):
