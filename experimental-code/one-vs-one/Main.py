@@ -53,9 +53,9 @@ if __name__ == '__main__':
     
     direction_estimator.test()
     
-    direction_estimator.dump_experiments(".")
+#    direction_estimator.dump_experiments(".")
 
-    direction_estimator.decision_function_argmax()
+    direction_estimator.decision_function_pairwise_classification()
     
     direction_estimator.dump_classification("classification_result.csv")
     
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     
     test_accuracy = direction_estimator.predict_test_accuracy()
     
-    direction_estimator.print_confusion_matrix()
+#    direction_estimator.print_confusion_matrix()
 
     print "\n Test Accuracy in fraction: " + str(test_accuracy)
     print "\n\ntest accuracy: " + str(test_accuracy * 100.0)
