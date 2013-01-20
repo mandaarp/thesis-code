@@ -131,7 +131,7 @@ class SVM(object):
         
         print "SVM: training the " + self.class_name + " SVM ..."
 #        self.training_accuracy = self.experiment.TrainSvm()
-        self.training_accuracy = self.rbf_crossvalidate_train()       
+        self.training_accuracy = self.rbf_train()       
         print "SVM: training accuracy: " + str(self.training_accuracy)
     
     def test(self):
