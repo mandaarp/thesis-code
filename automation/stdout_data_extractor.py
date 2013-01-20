@@ -69,7 +69,7 @@ class StdoutDataExtractor(object):
     def print_data_dict(self):
         
         for key in self.data_dict:
-            print key + ":\t " + self.data_dict[key]
+            print key + ":\t " + str(self.data_dict[key])
     
 if __name__ == '__main__':
     
@@ -80,4 +80,5 @@ if __name__ == '__main__':
     
     stdout_parser = StdoutDataExtractor(args.stdout_file)
     stdout_parser.load_data()
+    data_dict = stdout_parser.get_data_dict()
     stdout_parser.print_data_dict()
