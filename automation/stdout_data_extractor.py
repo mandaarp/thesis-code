@@ -43,19 +43,15 @@ class StdoutDataExtractor(object):
         for line in self.lines:
             csv = line.split(":")
             if STR_NUM_OF_PROTOTYPES in line:
-                print csv
                 self.data_dict[STR_NUM_OF_PROTOTYPES] = float(csv[1])
                 continue
             if STR_PROTOTYPE_GEN_METHOD in line:
-                print csv
                 self.data_dict[PROTOTYPE_GEN_METHOD] = csv[1]
                 continue
             if STR_TRAINING_ACCURACY in line:
-                print csv
                 train_acc_list.append(float(csv[2]))
                 continue
             if STR_TEST_ACCURACY in line:
-                print csv
                 self.data_dict[AGGREGATE_TESTING_ACCURACY] = float(csv[1])
                 continue
         
