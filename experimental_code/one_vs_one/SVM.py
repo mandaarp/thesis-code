@@ -81,7 +81,7 @@ class SVM(object):
     
         """
         if self.experiment.train_features == None:
-          self.experiment.ComputeFeatures()
+            self.experiment.ComputeFeatures()
         # Prepare the data
         train_features, train_labels = svm.PrepareFeatures(self.experiment.train_features)
         # Create the SVM classifier with feature scaling.
@@ -114,7 +114,7 @@ class SVM(object):
     
         """
         if self.experiment.train_features == None:
-          self.experiment.ComputeFeatures()
+            self.experiment.ComputeFeatures()
         features, labels = svm.PrepareFeatures(self.experiment.GetFeatures())
         # Create the SVM classifier with feature scaling.
         classifier = svm.Pipeline([ ('scaler', sklearn.preprocessing.Scaler()),
