@@ -113,7 +113,7 @@ class SVMAnalysis(object):
     def _argmax(self, numpy_array=None):
         
         max_value_index = numpy_array.argmax()
-        
+
         if max_value_index == 0:
             return STR_PEDESTRIAN_BACK
         elif max_value_index == 1:
@@ -126,15 +126,21 @@ class SVMAnalysis(object):
     def _update_dec_values_train_acc_linear(self, image_to_decision_value):
         
         for key in image_to_decision_value:
+            old = image_to_decision_value[key]
+            new = 0
             if STR_PEDESTRIAN_BACK in key:
                 image_to_decision_value[key] = float(self.back_svm_training_accuracy * image_to_decision_value[key])
+                new = image_to_decision_value[key]
             elif STR_PEDESTRIAN_FRONT in key:
                 image_to_decision_value[key] = float(self.front_svm_training_accuracy * image_to_decision_value[key])
+                new = image_to_decision_value[key]
             elif STR_PEDESTRIAN_LEFT in key:
                 image_to_decision_value[key] = float(self.left_svm_training_accuracy * image_to_decision_value[key])
+                new = image_to_decision_value[key]
             elif STR_PEDESTRIAN_RIGHT in key:
                 image_to_decision_value[key] = float(self.right_svm_training_accuracy * image_to_decision_value[key])
-        
+                new = image_to_decision_value[key]
+#            print "old: " + str(old) + " \t new: " + str(new)
         return image_to_decision_value
     
     def train_acc_linear_decision_function(self):
