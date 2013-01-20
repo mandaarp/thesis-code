@@ -75,7 +75,7 @@ class SVMAnalysis(object):
             elif svm_predictions[prediction] == -1 and actual_class not in prediction:
                 true_predictions = true_predictions + 1
         
-        return float(float(true_predictions) / float(len(svm_predictions)))
+        return float((float(true_predictions) / float(len(svm_predictions)))*100.0)
 
     def test_accuracies(self):
         
