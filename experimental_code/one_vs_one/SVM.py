@@ -67,10 +67,73 @@ class SVM(object):
         if value.STR_MAKE_UNIFORM_RANDOM_S2_PROTOTYPES == proto_gen_method:
             self.experiment.MakeUniformRandomS2Prototypes(self.num_of_prototypes)
         
+    def rbf_train(self):
+        
+        import sklearn.metrics
+        import sklearn.pipeline
+        import sklearn.preprocessing
+        import sklearn.svm
+        
+        """Construct an SVM classifier from the set of training images.
+
+        :returns: Training accuracy.
+        :rtype: float
+    
+        """
+        if self.experiment.train_features == None:
+          self.experiment.ComputeFeatures()
+        # Prepare the data
+        train_features, train_labels = svm.PrepareFeatures(self.experiment.train_features)
+        # Create the SVM classifier with feature scaling.
+        self.experiment.classifier = svm.Pipeline([ ('scaler', sklearn.preprocessing.Scaler()),
+            ('svm', sklearn.svm.NuSVC(gamma=0.00001))])
+        self.experiment.classifier.fit(train_features, train_labels)
+        # Evaluate the classifier
+        decision_values = self.experiment.classifier.decision_function(train_features)
+        predicted_labels = self.experiment.classifier.predict(train_features)
+        accuracy = sklearn.metrics.zero_one_score(train_labels, predicted_labels)
+        fpr, tpr, thresholds = sklearn.metrics.roc_curve(train_labels, predicted_labels)
+        auc = sklearn.metrics.auc(fpr, tpr)
+        self.experiment.train_results = dict(decision_values = decision_values,
+            predicted_labels = predicted_labels, accuracy = accuracy, auc = auc)
+        return self.experiment.train_results['accuracy']
+    
+    def rbf_crossvalidate_train(self):
+        
+        import sklearn.metrics
+        import sklearn.pipeline
+        import sklearn.preprocessing
+        import sklearn.svm
+        
+        """Test a learned SVM classifier.
+
+        The classifier is applied to all images using 10-by-10-way cross-validation.
+    
+        :returns: Cross-validation accuracy
+        :rtype: float
+    
+        """
+        if self.experiment.train_features == None:
+          self.experiment.ComputeFeatures()
+        features, labels = svm.PrepareFeatures(self.experiment.GetFeatures())
+        # Create the SVM classifier with feature scaling.
+        classifier = svm.Pipeline([ ('scaler', sklearn.preprocessing.Scaler()),
+            ('svm', sklearn.svm.NuSVC(nu=0.5, gamma=0.00001))])
+        scores = sklearn.cross_validation.cross_val_score(classifier, features,
+            labels, cv = 10, n_jobs = -1)
+        test_accuracy = scores.mean()
+        self.experiment.train_results = None
+        self.experiment.test_results = dict(accuracy = test_accuracy)
+        self.experiment.cross_validated = True
+        return test_accuracy
+        
+        
+      
     def train(self):
         
         print "SVM: training the " + self.class_name + " SVM ..."
-        self.training_accuracy = self.experiment.TrainSvm()
+#        self.training_accuracy = self.experiment.TrainSvm()
+        self.training_accuracy = self.rbf_crossvalidate_train()       
         print "SVM: training accuracy: " + str(self.training_accuracy)
     
     def test(self):
