@@ -66,6 +66,11 @@ class StdoutDataExtractor(object):
         
         return self.data_dict
     
+    def print_data_dict(self):
+        
+        for key in self.data_dict:
+            print key + ":\t " + self.data_dict[key]
+    
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='stdout.txt file parser')
@@ -75,4 +80,4 @@ if __name__ == '__main__':
     
     stdout_parser = StdoutDataExtractor(args.stdout_file)
     stdout_parser.load_data()
-    print stdout_parser.get_data_dict()
+    stdout_parser.print_data_dict()
