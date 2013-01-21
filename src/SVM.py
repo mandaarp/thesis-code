@@ -131,7 +131,11 @@ class SVM(object):
         
         print "SVM: training the " + self.class_name + " SVM ..."
         self.training_accuracy = self.experiment.TrainSvm()
+<<<<<<< HEAD
         #self.training_accuracy = self.rbf_train()       
+=======
+#        self.training_accuracy = self.rbf_train()       
+>>>>>>> 893e5ae2aa2d91571db2924e2b85551df7969e0c
         print "SVM: training accuracy: " + str(self.training_accuracy)
     
     def test(self):
