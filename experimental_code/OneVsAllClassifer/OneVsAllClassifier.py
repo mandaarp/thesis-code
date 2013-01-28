@@ -83,23 +83,18 @@ class OneVsAllClassifier(object):
         self.test_features, self.test_labels = glimpse_svm.PrepareFeatures(self.experiment.test_features)
         
     def generate_classifier(self):
-        self.classifer = glimpse_svm.Pipeline([ ('scaler', sklearn_preprocessing.Scaler()),
-        ('svm', sklearn_multiclass.OneVsRestClassifier(sklearn_svm.SVC(kernel=self.kernel, 
+        self.classifer = sklearn_multiclass.OneVsRestClassifier(sklearn_svm.SVC(kernel=self.kernel, 
                                                                        gamma=self.gamma, 
-                                                                       C=self.constant)))])
+                                                                       C=self.constant))
         
     def train_classifier(self):
         self.classifer.fit(self.train_features, self.train_labels)
         self.predicted_train_labels = self.classifer.predict(self.train_features)
         self.train_accuracy = sklearn_metrics.zero_one_score(self.train_labels, self.predicted_train_labels)
-        fpr, tpr, thresholds = sklearn_metrics.roc_curve(self.train_labels, self.predicted_train_labels)
-        self.train_auc = sklearn_metrics.auc(fpr, tpr)
         
     def test_classifier(self):
         self.predicted_test_labels = self.classifer.predict(self.test_features)
         self.test_accuracy = sklearn_metrics.zero_one_score(self.test_labels, self.predicted_test_labels)
-        fpr, tpr, thresholds = sklearn_metrics.roc_curve(self.test_labels, self.predicted_test_labels)
-        self.test_auc = sklearn_metrics.auc(fpr, tpr)
 
     def display_results(self):
         
@@ -126,7 +121,7 @@ if __name__ == '__main__':
     parser.add_argument("-p","--prototypes", required=True, type=int, action="store",dest='num_of_prototypes', help='number of S2 prototypes to imprint')
     parser.add_argument("-s", "--dataset-prefix", required=True, type=str, action="store", dest='dataset_prefix', help='dataset path prefix')
     parser.add_argument("-l","--layer", required=False, default="C2", type=str, action="store", dest='layer', help='prototype layer')
-    parser.add_argument("-g","--gamma", required=False, default=0.001, type=float, action="store", dest='gamma', help='SVM kernel gamma')
+    parser.add_argument("-g","--gamma", required=False, default=0.01, type=float, action="store", dest='gamma', help='SVM kernel gamma')
     parser.add_argument("-k","--kernel", required=False, default="rbf", type=str, action="store", dest='kernel', help='SVM kernel')
     parser.add_argument("-c","--constant", required=False, default=1.0, type=float, action="store", dest='constant', help='SVM kernel constant')
     
