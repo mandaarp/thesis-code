@@ -3,6 +3,12 @@ Created on Jan 27, 2013
 
 @author: mandar
 '''
+
+import sys,os
+source_path = os.path.join(os.environ['HOME'],"thesis-code")
+if source_path not in sys.path:
+    sys.path.insert(0,source_path)
+    
 from glimpse.glab import *
 import glimpse.util.svm as glimpse_svm
 import sklearn.svm as sklearn_svm
@@ -114,7 +120,6 @@ class OneVsAllClassifier(object):
 if __name__ == '__main__':
     
     import argparse
-    import os
     
     parser = argparse.ArgumentParser(description='entry point to OneVsAllClassifier')
     parser.add_argument("-t", "--proto-gen-method", required=True, type=str, action="store",dest='proto_gen_method', help='S2 prototype generation method')
@@ -127,7 +132,7 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     classifier = OneVsAllClassifier()
-    classifier.set_corpus(os.path.join(args.dataset_prefix, "train"), os.path.join(args.dataset_prefix, "test"))
+    classifier.set_corpus(os.path.join(args.dataset_prefix, values.STR_TRAIN), os.path.join(args.dataset_prefix, values.STR_TEST))
     classifier.set_prototype_layer(args.layer)
     classifier.set_prototypes_generation_method(args.proto_gen_method, args.num_of_prototypes)
     classifier.configure_classifier(args.kernel, args.gamma, args.constant)
