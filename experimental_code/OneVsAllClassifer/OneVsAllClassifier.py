@@ -15,6 +15,7 @@ import sklearn.svm as sklearn_svm
 import sklearn.preprocessing as sklearn_preprocessing
 import sklearn.multiclass as sklearn_multiclass
 import sklearn.metrics as sklearn_metrics
+import sklearn.cross_validation as sklearn_cross_validation
 import src.Constants as values
 
 class OneVsAllClassifier(object):
@@ -37,11 +38,13 @@ class OneVsAllClassifier(object):
         self.test_features = None
         self.test_labels = None
         self.train_accuracy = None
+        self.cross_validation_accuracy = None
         self.test_accuracy = None
         self.predicted_train_labels = None
         self.predicted_test_labels = None
         self.train_auc = None
         self.test_auc = None
+        
         
     def set_corpus(self, train_path, test_path):
         self.train_path = train_path
@@ -86,7 +89,15 @@ class OneVsAllClassifier(object):
         self.classifer = sklearn_multiclass.OneVsRestClassifier(sklearn_svm.SVC(kernel=self.kernel, 
                                                                        gamma=self.gamma, 
                                                                        C=self.constant))
-        
+    
+    def cross_validate_classifier(self):
+        self.train_classifier()
+        self.cross_validation_accuracy = sklearn_cross_validation.cross_val_score(self.classifer,
+                                                                       self.train_features,
+                                                                       self.train_labels,
+                                                                       cv=3,
+                                                                       n_jobs=-1).mean()
+    
     def train_classifier(self):
         self.classifer.fit(self.train_features, self.train_labels)
         self.predicted_train_labels = self.classifer.predict(self.train_features)
@@ -108,6 +119,7 @@ class OneVsAllClassifier(object):
         print "gamma                          : " + str(self.gamma)
         print "constant C                     : " + str(self.constant)
         print "training accuracy              : " + str(self.train_accuracy)
+        print "cross validation accuracy      : " + str(self.cross_validation_accuracy)
         print "testing accuracy               : " + str(self.test_accuracy)
         print "training area under curve      : " + str(self.train_auc)
         print "testing area under curve       : " + str(self.test_auc)
@@ -156,6 +168,9 @@ if __name__ == '__main__':
     
     print "training classifier ..."
     classifier.train_classifier()
+    
+#    print "cross-validating classifier ..."
+#    classifier.cross_validate_classifier()
     
     print "testing classifier ..."
     classifier.test_classifier()
