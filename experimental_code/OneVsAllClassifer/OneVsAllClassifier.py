@@ -60,7 +60,7 @@ class OneVsAllClassifier(object):
         self.constant = constant
     
     def generate_experiment(self):
-        self.experiment = SetExperiment(model=SetModelClass('ml'), layer=SetLayer(self.prototype_layer))
+        self.experiment = SetExperiment()#model=SetModelClass('ml'), layer=SetLayer(self.prototype_layer))
         self.experiment.SetTrainTestSplitFromDirs(self.train_path, self.test_path)
         
     def generate_prototypes(self):
