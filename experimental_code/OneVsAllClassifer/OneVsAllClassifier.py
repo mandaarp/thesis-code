@@ -131,15 +131,39 @@ if __name__ == '__main__':
     parser.add_argument("-c","--constant", required=False, default=1.0, type=float, action="store", dest='constant', help='SVM kernel constant')
     
     args = parser.parse_args()
+    
+    print "initializing ..."
     classifier = OneVsAllClassifier()
+    
+    print "settting corpus ..."
     classifier.set_corpus(os.path.join(args.dataset_prefix, values.STR_TRAIN), os.path.join(args.dataset_prefix, values.STR_TEST))
+    
+    print "setting prototype layer ..."
     classifier.set_prototype_layer(args.layer)
+    
+    print "setting prototype generation method ..."
     classifier.set_prototypes_generation_method(args.proto_gen_method, args.num_of_prototypes)
+
+    print "configuring classifier ..."
     classifier.configure_classifier(args.kernel, args.gamma, args.constant)
+
+    print "generating experiment ..."
     classifier.generate_experiment()
+
+    print "generating prototypes ..."
     classifier.generate_prototypes()
+    
+    print "extracting features ..."
     classifier.extract_features()
+    
+    print "generating classifier ..."
     classifier.generate_classifier()
+    
+    print "training classifier ..."
     classifier.train_classifier()
+    
+    print "testing classifier ..."
     classifier.test_classifier()
+    
+    print "displaying results ...\n"
     classifier.display_results()
