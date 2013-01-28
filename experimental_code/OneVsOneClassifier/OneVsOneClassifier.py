@@ -166,11 +166,11 @@ if __name__ == '__main__':
     print "generating classifier ..."
     classifier.generate_classifier()
     
-#    print "training classifier ..."
-#    classifier.train_classifier()
+    print "training classifier ..."
+    classifier.train_classifier()
     
-    print "cross-validating classifier ..."
-    classifier.cross_validate_classifier()
+#    print "cross-validating classifier ..."
+#    classifier.cross_validate_classifier()
     
     print "testing classifier ..."
     classifier.test_classifier()
