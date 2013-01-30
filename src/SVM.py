@@ -40,8 +40,10 @@ class SVM(object):
         SetModelClass('ml')
         params = GetParams()
         params.image_resize_method = 'scale short edge'
+        SetParams(params)
+        SetLayer("c1")
         self.experiment = SetExperiment()
-                
+        
         if testing_images_path is None:
             self.experiment.SetCorpus(self.training_images_path)
         else:
@@ -53,8 +55,8 @@ class SVM(object):
         self.num_of_prototypes = num_of_prototypes
         
         if value.STR_IMPRINT_S2_PROTOTYPES == proto_gen_method:
-            self.experiment.ImprintS2Prototypes(self.num_of_prototypes)
-            
+#            self.experiment.ImprintS2Prototypes(self.num_of_prototypes)
+            pass            
         if value.STR_MAKE_HISTOGRAM_RANDOM_S2_PROTOTYPES == proto_gen_method:
             self.experiment.MakeHistogramRandomS2Prototypes(self.num_of_prototypes)
         
@@ -130,6 +132,7 @@ class SVM(object):
     def train(self):
         
         print "SVM: training the " + self.class_name + " SVM ..."
+        print "Experiment object: " + str(self.experiment)
         self.training_accuracy = self.experiment.TrainSvm()
 
         print "SVM: training accuracy: " + str(self.training_accuracy)
