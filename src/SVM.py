@@ -6,6 +6,7 @@ Created on Nov 30, 2012
 
 from glimpse.glab import *
 from glimpse.util import svm
+from glimpse.models import ml
 import os
 import Constants as value
 
@@ -37,9 +38,12 @@ class SVM(object):
         
         self.training_images_path = training_images_path
         self.testing_images_path = testing_images_path
-        SetModelClass('ml')
+#        SetModelClass('ml')
+        SetModelClass(ml.Model)
         params = GetParams()
-        params.image_resize_method = 'scale short edge'
+#        params.image_resize_method = 'scale short edge'
+        params.image_resize_method = 'scale and crop'
+        
         SetParams(params)
         SetLayer("c1")
         self.experiment = SetExperiment()
