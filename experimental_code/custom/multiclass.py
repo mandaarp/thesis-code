@@ -3,6 +3,11 @@ Created on Feb 8, 2013
 
 @author: mandar
 '''
+import sys,os
+source_path = os.path.join(os.environ['HOME'],"thesis-code")
+if source_path not in sys.path:
+    sys.path.insert(0,source_path)
+    
 from experimental_code.one_vs_one import Constants as values
 import numpy
 
