@@ -166,6 +166,84 @@ class MultiClassOneVsOneVoting(object):
     
         return accuracy
 
+class TwoSVM(object):
+    
+    def __init__(self):
+        self.decision_values_file_path = None
+        self.decision_values_data = None
+
+        self.image_to_decision_value_back_vs_front = {}
+        self.image_to_decision_value_left_vs_right = {}
+        
+        self.image_to_decision_value_back = {}
+        self.image_to_decision_value_front = {}
+        self.image_to_decision_value_left = {}
+        self.image_to_decision_value_right = {}
+        
+        self.image_to_prediction = {}
+    
+    def set_data(self, decision_values_file_path):
+        self.decision_values_file_path = decision_values_file_path
+        
+    def populate_decision_data(self):
+        
+        decision_file = open(self.decision_values_file_path, "r")
+        self.decision_values_data = decision_file.readlines()
+        decision_file.close()
+    
+        for line in self.decision_values_data[1:]:
+            csv_line = line.split(',')
+            self.image_to_decision_value_back_vs_front[csv_line[0]] = float(csv_line[1])
+            self.image_to_decision_value_left_vs_right[csv_line[0]] = float(csv_line[6])
+    
+    def calculate_decision_values(self):
+        
+        for image in self.image_to_decision_value_back_vs_front:
+            self.image_to_decision_value_back[image] = 0.0
+            self.image_to_decision_value_front[image] = 0.0
+            self.image_to_decision_value_left[image] = 0.0
+            self.image_to_decision_value_right[image] = 0.0
+            
+            if self.image_to_decision_value_back_vs_front[image] > 0:
+                self.image_to_decision_value_back[image] = self.image_to_decision_value_back_vs_front[image]
+            else:
+                self.image_to_decision_value_front[image] = self.image_to_decision_value_back_vs_front[image]
+            
+            if self.image_to_decision_value_left_vs_right[image] > 0:
+                self.image_to_decision_value_left[image] = self.image_to_decision_value_left_vs_right[image]
+            else:
+                self.image_to_decision_value_right[image] = self.image_to_decision_value_left_vs_right[image]
+
+    def decide(self):
+        
+        for image in self.image_to_decision_value_back_vs_front:
+            
+            max_value_index = numpy.argmax([abs(self.image_to_decision_value_back[image]),
+                                            abs(self.image_to_decision_value_front[image]),
+                                            abs(self.image_to_decision_value_left[image]),
+                                            abs(self.image_to_decision_value_right[image])])
+            if max_value_index == 0:
+                self.image_to_prediction[image] = values.STR_PEDESTRIAN_BACK
+            elif max_value_index == 1:
+                self.image_to_prediction[image] = values.STR_PEDESTRIAN_FRONT
+            elif max_value_index == 2:
+                self.image_to_prediction[image] = values.STR_PEDESTRIAN_LEFT
+            elif max_value_index == 3:
+                self.image_to_prediction[image] = values.STR_PEDESTRIAN_RIGHT
+    
+    def calculate_accuracy(self):
+        
+        positives = 0
+        total = len(self.image_to_prediction)
+        
+        for image in self.image_to_prediction:
+            if self.image_to_prediction[image] in image:
+                positives = positives + 1
+        
+        accuracy = float((float(positives)/float(total))* 100.0)
+    
+        return accuracy
+        
 if __name__ == '__main__':
     
     import argparse
@@ -179,4 +257,11 @@ if __name__ == '__main__':
     obj.populate_decision_data()
     obj.determine_votes()
     obj.decide()
-    print "Accuracy: " + str(obj.calculate_accuracy())
+    print "normalized-voting Accuracy: " + str(obj.calculate_accuracy())
+    
+    obj = TwoSVM()
+    obj.set_data(args.decision_values_file)
+    obj.populate_decision_data()
+    obj.calculate_decision_values()
+    obj.decide()
+    print "TwoSVM Accuracy: " + str(obj.calculate_accuracy())
