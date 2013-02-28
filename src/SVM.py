@@ -41,12 +41,12 @@ class SVM(object):
 #        SetModelClass('ml')
         SetModelClass(ml.Model)
         params = GetParams()
-#        params.image_resize_method = 'scale short edge'
-        params.image_resize_method = 'scale and crop'
-        params.image_resize_aspect_ratio = 0.33
+        params.image_resize_method = 'scale short edge'
+#        params.image_resize_method = 'scale and crop'
+#        params.image_resize_aspect_ratio = 0.33
         
         SetParams(params)
-        SetLayer("c1")
+#        SetLayer("c1")
         self.experiment = SetExperiment()
         
         if testing_images_path is None:
