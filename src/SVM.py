@@ -141,6 +141,16 @@ class SVM(object):
         self.training_accuracy = self.experiment.TrainSvm()
 
         print "SVM: training accuracy: " + str(self.training_accuracy)
+        print "SVM: AUC" + str(self.experiment.test_results["auc"])
+        
+    
+    def cross_validate(self):
+        
+        print "SVM: cross validating the " + self.class_name + " SVM ..."
+        print "Experiment object: " + str(self.experiment)
+        self.training_accuracy = self.experiment.CrossValidateSvm()
+
+        print "SVM: cross validation accuracy: " + str(self.training_accuracy)
     
     def test(self):
         

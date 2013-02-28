@@ -58,10 +58,10 @@ class DAG(object):
                     else:
                         self.back_vs_front_DAG_results[line] = STR_PEDESTRIAN_LEFT
                 elif self.back_vs_right_image_to_value[line] > 0:
-                    if self.back_vs_right_image_to_value[line] > 0:
-                        self.back_vs_front_DAG_results[line] = STR_PEDESTRIAN_BACK
-                    else:
-                        self.back_vs_front_DAG_results[line] = STR_PEDESTRIAN_RIGHT
+#                    if self.back_vs_right_image_to_value[line] > 0:
+                    self.back_vs_front_DAG_results[line] = STR_PEDESTRIAN_BACK
+                else:
+                    self.back_vs_front_DAG_results[line] = STR_PEDESTRIAN_RIGHT
             else:
                 if self.left_vs_right_image_to_value[line] > 0:
                     if self.front_vs_left_image_to_value[line] > 0:
@@ -84,6 +84,13 @@ class DAG(object):
         accuracy = float(true_positives) / float(len(self.back_vs_front_DAG_results))
         print "accuracy in fraction: " + str(accuracy)
         print "accuracy: " + str(float(accuracy)*100.0) + " %"
+    
+    def dump_classification_result(self):
+        
+        f = open("DAG_Classification_Result.csv","w")
+        for line in self.back_vs_front_DAG_results:
+            f.write(line + "," + self.back_vs_front_DAG_results[line] + "\n")
+        f.close()
 
 if __name__ == '__main__':
     
@@ -99,3 +106,5 @@ if __name__ == '__main__':
     dag.DAG_back_vs_front()
     
     dag.get_testing_accuracy()
+    
+    dag.dump_classification_result()

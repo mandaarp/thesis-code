@@ -34,7 +34,7 @@ right_as_right=0
 #lines = f.readlines()
 #f.close()
 image_to_class = {}
-for row in list(csv.reader(open(sys.argv[1],"r")))[1:]:
+for row in list(csv.reader(open(sys.argv[1],"r")))[0:]:
     if p_back == row[1]:
         if p_back in row[0]:
             back_as_back = back_as_back + 1
