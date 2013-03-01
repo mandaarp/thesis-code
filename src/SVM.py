@@ -60,8 +60,8 @@ class SVM(object):
         self.num_of_prototypes = num_of_prototypes
         
         if value.STR_IMPRINT_S2_PROTOTYPES == proto_gen_method:
-#            self.experiment.ImprintS2Prototypes(self.num_of_prototypes)
-            pass            
+            self.experiment.ImprintS2Prototypes(self.num_of_prototypes)
+#            pass            
         if value.STR_MAKE_HISTOGRAM_RANDOM_S2_PROTOTYPES == proto_gen_method:
             self.experiment.MakeHistogramRandomS2Prototypes(self.num_of_prototypes)
         
