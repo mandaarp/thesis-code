@@ -141,8 +141,20 @@ class SVM(object):
         self.training_accuracy = self.experiment.TrainSvm()
 
         print "SVM: training accuracy: " + str(self.training_accuracy)
-        print "SVM: AUC" + str(self.experiment.test_results["auc"])
-        
+        if self.experiment.auc is not None:
+            print "SVM: AUC: " + str(self.experiment.auc)
+        else:
+            print "SVM: AUC is None"
+        if self.experiment.fpr is not None:
+            print "SVM: fpr: " + str(self.experiment.fpr)
+        else:
+            print "SVM: fpr is None"
+        if self.experiment.tpr is not None:
+            print "SVM: tpr: " + str(self.experiment.tpr)
+        else:
+            print "SVM: thresholds is None"
+        if self.experiment.thresholds is not None:
+            print "SVM: thresholds: " + str(self.experiment.thresholds)
     
     def cross_validate(self):
         
