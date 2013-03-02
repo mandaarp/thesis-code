@@ -135,16 +135,16 @@ class DirectionEstimator(object):
             return
         
         print "DirectionEstimator: training each SVM ..."
-        self.svm_person_back.train()
+#        self.svm_person_back.train()
         self.svm_person_back.cross_validate()
         
-        self.svm_person_forward.train()
+#        self.svm_person_forward.train()
         self.svm_person_forward.cross_validate()
         
-        self.svm_person_left.train()
+#        self.svm_person_left.train()
         self.svm_person_left.cross_validate()
         
-        self.svm_person_right.train()
+#        self.svm_person_right.train()
         self.svm_person_right.cross_validate()
     
     def test(self):
