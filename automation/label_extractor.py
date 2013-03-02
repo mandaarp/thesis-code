@@ -38,6 +38,7 @@ class One_vs_All(object):
 
         actual_labels = []
         predicted_labels = []
+        decision_values = []
         
         for image in image_to_decision_value:
             
@@ -50,8 +51,10 @@ class One_vs_All(object):
                 predicted_labels.append(1)
             else:
                 predicted_labels.append(-1)
+
+            decision_values.append(float(image_to_decision_value[image]))
         
-        fpr, tpr, thresholds = metrics.roc_curve(actual_labels, predicted_labels)
+        fpr, tpr, thresholds = metrics.roc_curve(actual_labels, decision_values) #predicted_labels)
                 
         auc = metrics.auc(fpr, tpr)
         pl.clf()
@@ -110,6 +113,7 @@ class One_vs_One(object):
         actual_neg_labels = []
         predicted_pos_labels = []
         predicted_neg_labels = []
+        decision_values = []
         
         for image in image_to_decision_value:
             
@@ -169,6 +173,7 @@ class One_vs_One(object):
         
         actual_labels = []
         predicted_labels = []
+        decision_values = []
         
         for image in image_to_decision_value:
             
@@ -178,6 +183,7 @@ class One_vs_One(object):
                     predicted_labels.append(1)
                 else:
                     predicted_labels.append(-1)
+                decision_values.append(float(image_to_decision_value[image]))
             
             if neg_label in image:
                 actual_labels.append(-1)
@@ -185,8 +191,9 @@ class One_vs_One(object):
                     predicted_labels.append(-1)
                 else:
                     predicted_labels.append(1)
+                decision_values.append(float(image_to_decision_value[image]))
         
-        fpr, tpr, thresholds = metrics.roc_curve(actual_labels, predicted_labels)
+        fpr, tpr, thresholds = metrics.roc_curve(actual_labels, decision_values)#predicted_labels)
                 
         auc = metrics.auc(fpr, tpr)
         pl.clf()
